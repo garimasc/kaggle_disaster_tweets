@@ -3,6 +3,8 @@ Natural Language Processing with Disaster Tweets (Kaggle Competition for Getting
 
 Based on my recently developing interest in decision science and NLP, I decided to choose this project to revise some previously learned ML skills and start building a GitHub portfolio.
 
+My best kaggle score for the Kaggle competition was pretty low, at nearly 79%. But my personal goal in doing this competition was not to build the best model but as mentioned revise basic concepts of ML model building and scoring. And also familiarize myself with writing code after nearly a year of break. This inexperience will also be reflected in the write-up below, and hopefully both my models and documentation will get better over the next few months!
+
 ## Clean and Prep the data
 
 The first step was to load and study the data. We have a training set of 7613 tweets, out of which all 7552 (~99%) have a keyword tag but nearly 33% are missing location tags. Additionally, in this dataset, every tweet has been classified as a disaster tweet (target = 1) or not (target = 0).
@@ -58,9 +60,23 @@ We can see that with 1000 principal components, we are able to capture about 80%
 
 ![Variance Explained](./images/explained_variance.png)
 
-
 #### Models: Logistic Regression, KNN, Decision Tree
+Now we have the dataset ready for training the model. We use 3 classification models here: logistic regression, decision tree, and K-nearest neighbours.
 
+In the training dataset, as expected the decision tree performs the best in-sample but seems to have the same validation score as the other two models. This clearly shows that the highly complex decision tree model is overfitting the training data.
 
+Another interesting fact to note is that while the training score seems to increase slightly when increasing the number of principal components, the test score stays relatively flat. Because of this, in the further steps, we are going to use only 200 principal components.
+
+![Variance Explained](./images/train_validation_score_pca.png)
+
+### Final Model
+Since all of our models seem to have a fairly low validation/test score, I am using an ensemble method to classify the test tweets.
+
+1. Calculate predictions based on Decision Tree (Model 1) and logistic regression (Model 2) using TF-IDF and PCA. Also calculate the prdiction based on keyword classification (Model 3).
+2. If Models 1 & 2 agree on the classification, we use that as the final result. If they disagree, we use the most common prediction using all 3 models.
+
+**Note**: This ensemble method increases our test accuracy from 68% to nearly 79%.
+
+![Example](./images/classification_example.png)
 
 
