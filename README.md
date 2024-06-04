@@ -45,7 +45,22 @@ The very first model we build is a very simple one that aims to classify the twe
 ![Classification using Keywords](./images/confusion_keyword_lreg.png)
 
 ### Classification using TF-IDF Vectorizer
+At this stage, we are ready to build more complicated models using the actual text in the tweets. 
 
 #### Vectorization
+The first step is to vectorize the tweet text, and for that we use a TF-IDF vectorizer with ngrams between length 1 and 3. Based on hyperparameters of min and max df, we get a corpus of length 4849, excluding english stopwords.
+
 #### PCA (or Truncated SVD)
+Since we only have ~7500 observations, we need to reduce the dimensionality of this dataset in order to be able to correctly train the model.
+For this, we use the truncated svd model because we have a sparse dataset.
+
+We can see that with 1000 principal components, we are able to capture about 80% of the variance. This has reduced the dimensionality of our dataset to about 1/4th of what it was before.
+
+![Variance Explained](./images/explained_variance.png)
+
+
 #### Models: Logistic Regression, KNN, Decision Tree
+
+
+
+
