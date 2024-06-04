@@ -20,6 +20,32 @@ After cleaning the tweet texts, we lemmatize the words in the tweets using the *
 
 ## Preliminary Analysis
 
-At this stage
+Before building out any classification models, I wanted to dive into the data a little bit deeper.
 
-![image info](./images/lemmatized_word_cloud.png)
+### Keywords 
+Since all of the tweets in the training and test data have been tagged with a keyword, the first thing that I want to look at is the difference in the most frewuent keywords for tweets that were characterized as disaster vs those that were not. As you can see in the image below, there seems to be a clear difference between the keywords of disaster vs regular tweets.
+
+One example that stands out is the word *bodybag*, which in most cases was used in tweets related to fashion, rather than disaster.
+
+![Word Clouds for Keywords](./images/lemmatized_word_cloud.png)
+
+
+## Models
+
+### Logistic Regression using Keyword only
+The very first model we build is a very simple one that aims to classify the tweet solely based on the keywords. We have 177 unique keywords in the training dataset, and used a one-hot encoding to create a data frame of size 7552x177.
+
+**Advantages**: Easy to implement and understand - the coefficients give us a clear intuition of which words increase the probability of the tweet being about an actual disaster vs not.
+
+**Disadvantages**: 
+1. Limited vocabulary. If there is a keyword in the test/validation dataset that we didnt encounter in the training dataset, the model would not know how to handle it.
+2. We are not using any of the information in the actual text of the tweets.
+3. In any real world application, we would probably have a dataset comprising just the tweet without any keyword attached to it. Limits the application of this model.
+
+![Classification using Keywords](./images/confusion_keyword_lreg.png)
+
+### Classification using TF-IDF Vectorizer
+
+#### Vectorization
+#### PCA (or Truncated SVD)
+#### Models: Logistic Regression, KNN, Decision Tree
